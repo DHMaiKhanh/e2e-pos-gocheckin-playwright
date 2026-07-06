@@ -24,6 +24,7 @@
     "test:smoke": "cross-env ENV=local playwright test --grep @smoke",
     "test:regression": "cross-env ENV=local playwright test --grep @regression",
     "test:e2e": "cross-env ENV=local playwright test tests/e2e",
+    "test:appointment": "cross-env ENV=local playwright test tests/e2e/booking/create-appointment.e2e.spec.ts --project=chromium --no-deps --workers=1",
     "test:auth": "cross-env ENV=local playwright test tests/e2e/auth",
     "test:api": "cross-env ENV=local playwright test --project=api",
     "test:headed": "cross-env ENV=local playwright test --headed",

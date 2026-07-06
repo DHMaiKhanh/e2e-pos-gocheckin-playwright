@@ -9,6 +9,19 @@ export interface Credentials {
   password: string;
 }
 
+/**
+ * Store-scoped login for the GoCheckin POS (2-step): a numeric store `id`
+ * (tenant) followed by staff `username`/`password`. `passcode` unlocks the
+ * Go Booking mini-app (and appointment PII). Demo defaults let the booking
+ * suite run out-of-the-box against the "Nail Salon Demo" tenant.
+ */
+export interface StoreCredentials {
+  id: string;
+  username: string;
+  password: string;
+  passcode: string;
+}
+
 export interface AppEnv {
   ENV: EnvName;
   HEADLESS: boolean;
@@ -24,6 +37,9 @@ export interface AppEnv {
   /** Role-based seed accounts used by the auth setup project. */
   CASHIER: Credentials;
   ADMIN: Credentials;
+
+  /** Store-scoped login used by the Go Booking / appointment flows. */
+  STORE: StoreCredentials;
 
   LOG_LEVEL: 'debug' | 'info' | 'warn' | 'error';
 }
@@ -76,6 +92,13 @@ export const loadEnv = (): AppEnv => {
     ADMIN: {
       username: process.env.ADMIN_USER ?? '',
       password: process.env.ADMIN_PASS ?? '',
+    },
+
+    STORE: {
+      id: process.env.STORE_ID ?? '100004',
+      username: process.env.STORE_USER ?? 'admin',
+      password: process.env.STORE_PASS ?? '123456',
+      passcode: process.env.GO_BOOKING_PASSCODE ?? '8888',
     },
 
     LOG_LEVEL: (process.env.LOG_LEVEL as AppEnv['LOG_LEVEL']) ?? 'info',
